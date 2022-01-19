@@ -5,33 +5,20 @@ import java.io.PrintStream;
 import java.io.InputStream;
 import java.util.HashMap;
 
+import android.content.ContentResolver;
+import android.net.Uri;
+
 import org.apache.commons.imaging.ImageReadException;
 
 
-//import static nom.tam.fits.header.Standard.END;
-//import static nom.tam.fits.header.Standard.EXTEND;
 import static nom.tam.fits.header.Standard.NAXIS;
 import static nom.tam.fits.header.Standard.NAXISn;
 
-//import nom.tam.fits.BasicHDU;
 import nom.tam.fits.Fits;
 import nom.tam.fits.FitsException;
 import nom.tam.fits.Header;
-//import nom.tam.fits.HeaderCard;
-//import nom.tam.fits.HeaderCardException;
-//import nom.tam.fits.HeaderCommentsMap;
-//import nom.tam.fits.HeaderOrder;
 import nom.tam.fits.ImageData;
 import nom.tam.fits.ImageHDU;
-//import nom.tam.fits.TruncatedFileException;
-//import nom.tam.fits.header.Standard;
-//import nom.tam.util.ArrayDataOutput;
-//import nom.tam.util.FitsInputStream;
-//import nom.tam.util.FitsOutputStream;
-//import nom.tam.util.InputReader;
-//import nom.tam.util.FitsFile;
-//import nom.tam.util.ComplexValue;
-//import nom.tam.util.Cursor;
 import nom.tam.util.SafeClose;
 
 /**
@@ -137,17 +124,17 @@ public class FitsDecoder {
                     for (int j = 0; j < width; j++) {
 
                         float s = (float)data[0][j][i]/Integer.MAX_VALUE; //[-1,1]
-                        s = (s + 1)/2; //sF in range [0,1]
+                        s = (s + 1)/2; //s in range [0,1]
                         int r = (int)(s * 255); //[0,255]
                         r = Math.min(Math.max(r,0), 255);
 
                         s = (float)data[1][j][i]/Integer.MAX_VALUE;
-                        s = (s + 1)/2; //sF in range [0,1]
+                        s = (s + 1)/2; //s in range [0,1]
                         int g = (int)(s * 255);
                         g = Math.min(Math.max(g,0), 255);
 
                         s = (float)data[2][j][i]/Integer.MAX_VALUE;
-                        s = (s + 1)/2; //sF in range [0,1]
+                        s = (s + 1)/2; //s in range [0,1]
                         int b = (int)(s * 255);
                         g = Math.min(Math.max(b,0), 255);
 

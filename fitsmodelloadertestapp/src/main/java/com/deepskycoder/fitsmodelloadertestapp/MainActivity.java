@@ -3,8 +3,11 @@ package com.deepskycoder.fitsmodelloadertestapp;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentResolver;
+import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import com.bumptech.glide.Glide;
@@ -30,8 +33,15 @@ public class MainActivity extends AppCompatActivity {
         ImageView imageView = findViewById(R.id.imageView);
 
         try {
-
-            InputStream input = getResources().openRawResource(R.raw.crab_float32);
+            Resources resources = getResources();
+            Uri uri = new Uri.Builder()
+                    .scheme(ContentResolver.SCHEME_ANDROID_RESOURCE)
+                    .authority(resources.getResourcePackageName(R.raw.crab_float32))
+                    .appendPath(resources.getResourceTypeName(R.raw.crab_float32))
+                    .appendPath(resources.getResourceEntryName(R.raw.crab_float32))
+                    .build();
+            InputStream input = getContentResolver().openInputStream(uri);
+            //InputStream input = getResources().openRawResource(R.raw.crab_float32);
             System.out.println("Available bytes in the file: " + input.available());
 
 /*          //Load bitmap the old fashion way
@@ -69,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
           //Yet another way
             Glide.with(this)
                 .asBitmap()
-                .load(input)
+                .load(uri)
                 .into(new CustomTarget<Bitmap>() {
                     @Override
                     public void onResourceReady(Bitmap bitmap,

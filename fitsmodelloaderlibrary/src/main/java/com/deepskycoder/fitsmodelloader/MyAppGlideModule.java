@@ -1,7 +1,9 @@
 package com.deepskycoder.fitsmodelloader;
 
+import android.content.ContentResolver;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 import com.bumptech.glide.annotation.GlideModule;
 import com.bumptech.glide.module.AppGlideModule;
@@ -14,6 +16,7 @@ import java.io.InputStream;
 public class MyAppGlideModule extends AppGlideModule {
     @Override
     public void registerComponents(Context context, Glide glide, Registry registry) {
-        registry.prepend(InputStream.class, Bitmap.class, new FitsModelLoaderFactory());
+        ContentResolver resolver = context.getContentResolver();
+        registry.prepend(Uri.class, Bitmap.class, new FitsModelLoaderFactory(resolver));
     }
 }
